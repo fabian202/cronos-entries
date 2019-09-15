@@ -3,17 +3,21 @@ import 'dotenv/config';
 import mongoose from 'mongoose';
 import morgan from 'morgan'
 import cors from 'cors'
+import indexRoutes from './routes'
 
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('Welcome');
+  res.send('Hellor world...');
 });
 
 //Body parser
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
+
+//Routes
+app.use('/api', indexRoutes);
 
 //Mongoose
 mongoose.Promise = global.Promise;
