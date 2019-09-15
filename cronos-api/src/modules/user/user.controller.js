@@ -9,11 +9,11 @@ export const authenticate = async (req, res, next) => {
      const user = await User.findOne({ email });
      console.log(user)
      if(user) {
-         const { name } = user;
+         const { name, _id } = user;
     
          if(bcrypt.compareSync(password, user.password)) {
             const token = createToken(user);
-            res.send({...token, name, email });
+            res.send({...token, name, email, _id });
          } else {
             res.status(400).json({ message: 'invalid' });
          }
