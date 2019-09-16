@@ -3,8 +3,11 @@ import { getTokenFromHeaders } from '../../services/auth'
 
 export const get = async (req, res, next) => {
  try {
+     //Get the user _id from the token
     const { _id } = getTokenFromHeaders(req);
     // const projects = await Project.find({}).populate('user');
+
+    //Get the projects by user
     const projects = await Project.find({ user: _id });
     res.send(projects);
  } catch (error) {
