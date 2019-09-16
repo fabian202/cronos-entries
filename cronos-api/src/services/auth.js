@@ -19,7 +19,7 @@ const verifyToken = token => {
   return jwt.verify(token, JWT_SECRET, JWT_OPTS);
 };
 
-const getTokenFromHeaders = req => {
+export const getTokenFromHeaders = req => {
   const token = req.headers['x-access-token'];
 
   if (token) {

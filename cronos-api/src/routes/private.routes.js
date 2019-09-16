@@ -1,9 +1,9 @@
 import { Router } from 'express';
-// import { TestRoutes } from '../modules/test';
+import { ProjectRoutes } from '../modules/project'
 
 const routes = Router();
 
-// routes.use('/test', TestRoutes);
+routes.use('/project', ProjectRoutes);
 
 
 export default routes;

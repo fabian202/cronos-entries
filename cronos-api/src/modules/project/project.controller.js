@@ -1,8 +1,11 @@
 import Project from './project.model'
+import { getTokenFromHeaders } from '../../services/auth'
 
 export const get = async (req, res, next) => {
  try {
-    const projects = await Project.find({}).populate('user');
+    const { _id } = getTokenFromHeaders(req);
+    // const projects = await Project.find({}).populate('user');
+    const projects = await Project.find({ user: _id });
     res.send(projects);
  } catch (error) {
     res.status(400).json({ message: error.message });
