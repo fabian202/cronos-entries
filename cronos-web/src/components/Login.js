@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 
 const Login = () => {
     const classes = useStyles();
-    const { email, password, onEmailChange, onPasswordChange, onAuthenticate, isLogged } = useAuthentication()
+    const { email, password, onEmailChange, onPasswordChange, onAuthenticate, isLogged, message } = useAuthentication()
 
     // const logged = isLogged ? <div>si</div> : <div>No</div>
     return (
@@ -49,6 +49,9 @@ const Login = () => {
           <div className={classes.paper}>
             <Typography component="h1" variant="h5">
               Sign in
+            </Typography>
+            <Typography component="h1" variant="subtitle1">
+                {message}
             </Typography>
             <form className={classes.form} noValidate onSubmit={onAuthenticate}>
               <TextField

@@ -34,7 +34,7 @@ export const  useSignUp = () => {
             setName(e.currentTarget.value);
         },
         onLastNameChange: (e) => {
-            setLastName(e.currentTarget.valueIm)
+            setLastName(e.currentTarget.value)
         },
         onEmailChange: (e) => {
             setEmail(e.currentTarget.value);

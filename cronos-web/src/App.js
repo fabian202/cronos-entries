@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Button from '@material-ui/core/Button';
 import {useRoutes} from 'hookrouter';
 import Home from './components/Home'
 import Entry from './components/Entry'
@@ -10,6 +9,7 @@ import SignUp from './components/SignUp'
 const routes = {
   '/': () => <Login />,
   '/signup': () => <SignUp />,
+  '/home': () => <Home />,
   '/entry': () => <Entry />
 };
 

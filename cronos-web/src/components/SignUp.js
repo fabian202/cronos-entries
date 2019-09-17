@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState , useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -6,8 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { A } from 'hookrouter';
+import { A, navigate } from 'hookrouter';
 import { useSignUp } from '../hooks/useSignUp'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -38,9 +42,20 @@ const useStyles = makeStyles(theme => ({
     }
   }));
   
+  
   export default function SignUp() {
     const classes = useStyles();
-    const { name, lastName, password, email, onNameChange, onEmailChange, onPasswordChange, onLastNameChange, onSignUp } = useSignUp();
+    const [open, setOpen] = useState(false);
+    const { name, lastName, password, email, signedUp, onNameChange, onEmailChange, onPasswordChange, onLastNameChange, onSignUp } = useSignUp();
+
+    useEffect(() => {
+      setOpen(signedUp);
+    }, [signedUp]);
+  
+    function handleClose() {
+      setOpen(false);
+      if(signedUp) navigate('/');
+    }
   
     return (
       <Container component="main" maxWidth="xs">
@@ -75,7 +90,7 @@ const useStyles = makeStyles(theme => ({
                   name="lastName"
                   autoComplete="lname"
                   value={lastName}
-                  ngChange={onLastNameChange}
+                  onChange={onLastNameChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -124,6 +139,24 @@ const useStyles = makeStyles(theme => ({
             </Grid>
           </form>
         </div>
+
+        <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Welcome! you have signed up successfully
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
       </Container>
     );
   }
