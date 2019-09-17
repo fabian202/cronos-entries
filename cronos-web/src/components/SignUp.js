@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   
   export default function SignUp() {
     const classes = useStyles();
-    const { name, password, email, onNameChange, onEmailChange, onPasswordChange, onSignUp } = useSignUp();
+    const { name, lastName, password, email, onNameChange, onEmailChange, onPasswordChange, onLastNameChange, onSignUp } = useSignUp();
   
     return (
       <Container component="main" maxWidth="xs">
@@ -74,6 +74,8 @@ const useStyles = makeStyles(theme => ({
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
+                  value={lastName}
+                  ngChange={onLastNameChange}
                 />
               </Grid>
               <Grid item xs={12}>

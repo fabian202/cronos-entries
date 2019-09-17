@@ -31,14 +31,16 @@ export const create = async (req, res, next) => {
     const { 
         name,
         email,
-        password
+        password,
+        lastName
      } = req.body;
 
 
     const user = new User({
         name,
         password, 
-        email
+        email,
+        lastName
     });
 
     try {
