@@ -1,11 +1,8 @@
 import React, {useState , useEffect} from 'react';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import { A, navigate } from 'hookrouter';
 import { useSignUp } from '../hooks/useSignUp'
 import Dialog from '@material-ui/core/Dialog';
@@ -13,43 +10,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
-const useStyles = makeStyles(theme => ({
-    '@global': {
-      body: {
-        backgroundColor: theme.palette.common.white,
-      },
-    },
-    paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(3),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
-    link: {
-      textDecoration: 'none', 
-      color: '#3f51b5'
-    }
-  }));
-  
-  
-  export default function SignUp() {
+  export default function SignUp({ useStyles }) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const { name, lastName, password, email, signedUp, onNameChange, onEmailChange, onPasswordChange, onLastNameChange, onSignUp } = useSignUp();
 
     useEffect(() => {
-      setOpen(signedUp);
+      setOpen(signedUp);    
     }, [signedUp]);
   
     function handleClose() {
@@ -58,8 +25,6 @@ const useStyles = makeStyles(theme => ({
     }
   
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
             Sign up
@@ -138,9 +103,8 @@ const useStyles = makeStyles(theme => ({
               </Grid>
             </Grid>
           </form>
-        </div>
 
-        <Dialog
+          <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
@@ -157,6 +121,9 @@ const useStyles = makeStyles(theme => ({
           </Button>
         </DialogActions>
       </Dialog>
-      </Container>
+
+        </div>
+
+       
     );
   }

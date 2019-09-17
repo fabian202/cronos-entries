@@ -5,11 +5,13 @@ import Home from './components/Home'
 import Entry from './components/Entry'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
+import PublicLayout from './components/PublicLayout'
+import PrivateLayout from './components/PrivateLayout'
 
 const routes = {
-  '/': () => <Login />,
-  '/signup': () => <SignUp />,
-  '/home': () => <Home />,
+  '/': () => <PublicLayout component={Login} />,
+  '/signup': () => <PublicLayout component={SignUp} />,
+  '/home': () => <PrivateLayout component={Home} />,
   '/entry': () => <Entry />
 };
 
