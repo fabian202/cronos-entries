@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useAuthentication} from '../hooks/useAuthentication'
+import { A } from 'hookrouter';
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -32,6 +32,10 @@ const useStyles = makeStyles(theme => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+    link: {
+        textDecoration: 'none', 
+        color: '#3f51b5'
+    }
   }));
 
 const Login = () => {
@@ -84,9 +88,9 @@ const Login = () => {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <A href="/signup"  className={classes.link}>
                     {"Don't have an account? Sign Up"}
-                  </Link>
+                  </A>
                 </Grid>
               </Grid>
             </form>

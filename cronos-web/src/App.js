@@ -5,9 +5,11 @@ import {useRoutes} from 'hookrouter';
 import Home from './components/Home'
 import Entry from './components/Entry'
 import Login from './components/Login'
+import SignUp from './components/SignUp'
 
 const routes = {
   '/': () => <Login />,
+  '/signup': () => <SignUp />,
   '/entry': () => <Entry />
 };
 
