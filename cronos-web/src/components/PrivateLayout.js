@@ -9,6 +9,7 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import { A, navigate } from 'hookrouter';
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -25,6 +26,7 @@ const useStyles = makeStyles(theme => ({
     },
     appBar: {
       borderBottom: `1px solid ${theme.palette.divider}`,
+      marginBottom: theme.spacing(2),
     },
     toolbar: {
       flexWrap: 'wrap',
@@ -34,6 +36,9 @@ const useStyles = makeStyles(theme => ({
     },
     link: {
       margin: theme.spacing(1, 1.5),
+      textDecoration: 'none',
+      textTransform: 'uppercase',
+      color: 'rgba(0, 0, 0, 0.87)'
     },
     heroContent: {
       padding: theme.spacing(8, 0, 6),
@@ -61,27 +66,20 @@ export default function PrivateLayout({ component }) {
       <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            Company name
+            Cronos
           </Typography>
           <nav>
-            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-              Features
-            </Link>
-            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-              Enterprise
-            </Link>
-            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-              Support
-            </Link>
+            <A href="/project" className={classes.link}>
+              Projects
+            </A>
           </nav>
           <Button href="#" color="primary" variant="outlined" className={classes.link}>
-            Login
+            Logout
           </Button>
         </Toolbar>
       </AppBar>
       {/* End hero unit */}
       <Container maxWidth="md" component="main">
-          arafueß
           <Component />
       </Container>
       {/* Footer */}

@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {useRoutes} from 'hookrouter';
 import Home from './components/Home'
-import Entry from './components/Entry'
+import EntryForm from './components/EntryForm'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
 import PublicLayout from './components/PublicLayout'
@@ -12,7 +12,7 @@ const routes = {
   '/': () => <PublicLayout component={Login} />,
   '/signup': () => <PublicLayout component={SignUp} />,
   '/home': () => <PrivateLayout component={Home} />,
-  '/entry': () => <Entry />
+  '/entry': () => <PrivateLayout component={EntryForm} />
 };
 
 const App = () => {

@@ -10,8 +10,6 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import { useEntries } from '../hooks/useEntries'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -19,6 +17,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import { navigate } from 'hookrouter';
 
 const useStyles = makeStyles(theme => ({
 
@@ -34,7 +35,15 @@ const useStyles = makeStyles(theme => ({
     billable: {
       color: 'green',
       fontWeight: 'bold'
-    }
+    },
+    fab: {
+      margin: theme.spacing(1),
+      top: 'auto',
+      right: 20,
+      bottom: 20,
+      left: 'auto',
+      position: 'fixed',
+    },
 }));
 
 const Home = () => {
@@ -57,11 +66,17 @@ const Home = () => {
       handleClose()
     }
 
+    const handleRedirect = () => {
+      navigate('/entry')
+    }
+
     return (
         <div>
+          <Fab color="primary" aria-label="add" className={classes.fab} onClick={handleRedirect}>
+            <AddIcon />
+          </Fab>
             <Grid container spacing={5} alignItems="flex-start">
             {entries.map(project => (
-                // Enterprise card is full width at sm breakpoint
                 <Grid item key={project.key} xs={12}  md={4}>
                 <Card>
                     <CardHeader
@@ -121,7 +136,7 @@ const Home = () => {
       >
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Welcome! you have signed up successfully
+            Are you sure yu want to delete the entry?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
