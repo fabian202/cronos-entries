@@ -4,7 +4,7 @@ import { getTokenFromHeaders } from '../../services/auth'
 export const get = async (req, res, next) => {
  try {
      //Get the user _id from the token
-    const { _id } = getTokenFromHeaders(req);
+     const { _id } = getTokenFromHeaders(req);
     // const projects = await Project.find({}).populate('user');
 
     //Get the projects by user
@@ -25,18 +25,19 @@ export const getById = async (req, res, next) => {
    }
 
 export const create = async (req, res, next) => {
+    const { _id } = getTokenFromHeaders(req);
     const { 
-        name, user
+        name
      } = req.body;
 
     const project = new Project({
         name, 
-        user
+        user: _id
     });
 
     try {
         const newProject = await project.save();
-        res.send(201);
+        res.send(newProject);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
