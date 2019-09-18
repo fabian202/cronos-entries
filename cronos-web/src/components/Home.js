@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState, useEffect} from 'react'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -10,6 +10,15 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import { useEntries } from '../hooks/useEntries'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
 
@@ -21,105 +30,76 @@ const useStyles = makeStyles(theme => ({
       justifyContent: 'center',
       alignItems: 'baseline',
       marginBottom: theme.spacing(2),
+    },
+    billable: {
+      color: 'green',
+      fontWeight: 'bold'
     }
 }));
 
-const tiers = [
-    {
-      title: 'Free',
-      price: '0',
-      description: ['10 users included', '2 GB of storage', 'Help center access', 'Email support', '10 users included', '2 GB of storage'],
-      buttonText: 'Sign up for free',
-      buttonVariant: 'outlined',
-    },
-    {
-      title: 'Pro',
-      subheader: 'Most popular',
-      price: '15',
-      description: [
-        '20 users included',
-        '10 GB of storage',
-        'Help center access',
-        'Priority email support',
-      ],
-      buttonText: 'Get started',
-      buttonVariant: 'contained',
-    },
-    {
-      title: 'Enterprise',
-      price: '30',
-      description: [
-        '50 users included',
-        '30 GB of storage',
-        'Help center access',
-        'Phone & email support',
-      ],
-      buttonText: 'Contact us',
-      buttonVariant: 'outlined',
-    },{
-        title: 'Enterprise',
-        price: '30',
-        description: [
-          '50 users included',
-          '30 GB of storage',
-          'Help center access',
-          'Phone & email support',
-        ],
-        buttonText: 'Contact us',
-        buttonVariant: 'outlined',
-      },{
-        title: 'Enterprise',
-        price: '30',
-        description: [
-          '50 users included',
-          '30 GB of storage',
-          'Help center access',
-          'Phone & email support',
-        ],
-        buttonText: 'Contact us',
-        buttonVariant: 'outlined',
-      },
-  ];
-
-
 const Home = () => {
     const classes = useStyles();
-    // const [entries, setEntries] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [entryId, setEntryId] = useState(null)
+    const { entries, onDeleteEntry } = useEntries()
 
-    // useEffect(async () => {
-    //     async function fetchPosts(params) {
-    //         const posts = await axios.get('https://jsonplaceholder.typicode.com/posts');
-    //         console.log(posts)
-    //     } project 5d7ea3ea2304990a9fa37832 user 5d7e9d3f953000083d60b64a
+    useEffect(() => {
+      if(entryId) setOpen(true)
+    }, [entryId])
 
-    //    fetchPosts()
-    // }, []);
+    const handleClose = () => {
+      setEntryId(null);
+      setOpen(false);
+    }
+
+    const handleDelete = (_id) => {
+      onDeleteEntry(_id)
+      handleClose()
+    }
 
     return (
         <div>
             <Grid container spacing={5} alignItems="flex-start">
-            {tiers.map(tier => (
+            {entries.map(project => (
                 // Enterprise card is full width at sm breakpoint
-                <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
+                <Grid item key={project.key} xs={12}  md={4}>
                 <Card>
                     <CardHeader
-                    title={tier.title}
-                    subheader={tier.subheader}
+                    title={project.key}
+                    subheader={`${project.total} hours`}
                     titleTypographyProps={{ align: 'center' }}
                     subheaderTypographyProps={{ align: 'center' }}
                     className={classes.cardHeader}
                     />
                     <CardContent>
-                    
                         <List>
-                        {tier.description.map(line => (
-                              <ListItem>
+                        {project.data.map(entry => (
+                              <ListItem key={entry._id}>
                                 <ListItemText
-                                  primary={line}
-                                  secondary={'Secondary text' }
+                                  primary={entry.comment}
+                                  secondary={
+                                    <React.Fragment>
+                                      <Typography
+                                        component="span"
+                                        variant="body2"
+                                        className={entry.billable ? classes.billable : null}
+                                        color="textSecondary"
+                                      >
+                                        $ 
+                                      </Typography>
+                                      <Typography
+                                        component="span"
+                                        variant="body2"
+                                        className={classes.inline}
+                                        color="textPrimary"
+                                      >
+                                        {` ${entry.hours} hours`}
+                                      </Typography>
+                                    </React.Fragment>
+                                  }
                                 />
                                 <ListItemSecondaryAction>
-                                  <IconButton edge="end" aria-label="delete">
+                                  <IconButton edge="end" aria-label="delete" onClick={() => setEntryId(entry._id)}>
                                     <DeleteIcon />
                                   </IconButton>
                                 </ListItemSecondaryAction>
@@ -132,6 +112,28 @@ const Home = () => {
                 </Grid>
             ))}
             </Grid>
+
+            <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Welcome! you have signed up successfully
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleDelete(entryId)} color="primary" autoFocus>
+            Ok
+          </Button>
+
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
         </div>
     )
 }
