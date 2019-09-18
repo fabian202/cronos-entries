@@ -2,7 +2,8 @@ import Entry from './entry.model'
 
 export const get = async (req, res, next) => {
  try {
-    const entries = await Entry.find({}).populate('user').populate('project');
+    const entries = await Entry.find({}).populate('project');
+    // const entries = await Entry.find({}).populate('user').populate('project');
     res.send(entries);
  } catch (error) {
     res.status(400).json({ message: error.message });

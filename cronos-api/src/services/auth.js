@@ -30,10 +30,12 @@ export const getTokenFromHeaders = req => {
 };
 
 export const validateUser = async (req, res, next) => {
+  console.log('validating')
     jwt.verify(req.headers['x-access-token'], JWT_SECRET, function(err, decoded) {
       if (err) {
         // res.json({status:"error", message: err.message, data:null});
-        res.send(401, {message: err.message});
+        // res.send(401, {message: err.message});
+        res.status(401).send({message: err.message})
       }else{
         // add user id to request
         console.log(decoded)
