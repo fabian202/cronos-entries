@@ -33,8 +33,8 @@ const useStyles = makeStyles(theme => ({
   }));
 
 export default function PublicLayout({component}) {
-    console.log(component)
     const Component = component;
+    
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />

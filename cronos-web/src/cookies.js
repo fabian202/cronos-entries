@@ -17,7 +17,6 @@ export function setCookie(cname, cvalue, hours) {
         c = c.substring(1);
       }
       if (c.indexOf(name) === 0) {
-        console.log(';getting', c.substring(name.length, c.length))
         try {
           return JSON.parse(c.substring(name.length, c.length));
       } catch (e) {

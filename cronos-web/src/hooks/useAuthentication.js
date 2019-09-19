@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import api from '../api'
-import { setCookie, getCookie } from '../cookies'
+import { setCookie } from '../cookies'
 import { navigate } from 'hookrouter';
 
 export const useAuthentication = () => {
@@ -8,10 +8,6 @@ export const useAuthentication = () => {
     const [ password, setPassword ] = useState('')
     const [ isLogged, setIslogged ] = useState(false);
     const [ message, setMessage ] = useState('')
-
-    useEffect(() => {
-        console.log(getCookie('token').token)
-    }, [])
 
     const postLogin = async () => {
         //user/authenticate
