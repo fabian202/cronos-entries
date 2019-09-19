@@ -20,6 +20,11 @@ import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { navigate } from 'hookrouter';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const useStyles = makeStyles(theme => ({
 
@@ -44,13 +49,22 @@ const useStyles = makeStyles(theme => ({
       left: 'auto',
       position: 'fixed',
     },
+    left: {
+      textAlign: 'left'
+    },
+    center: {
+      textAlign: 'center'
+    },
+    right: {
+      textAlign: 'right'
+    },
 }));
 
 const Home = () => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [entryId, setEntryId] = useState(null)
-    const { entries, onDeleteEntry } = useEntries()
+    const { entries, onDeleteEntry, total, date, handleDateChange } = useEntries()
 
     useEffect(() => {
       if(entryId) setOpen(true)
@@ -76,6 +90,36 @@ const Home = () => {
             <AddIcon />
           </Fab>
             <Grid container spacing={5} alignItems="flex-start">
+              <Grid item xs={4} className={classes.left}>
+              <Typography component="h1" variant="h5">
+              Daily entries
+            </Typography>
+            <Typography component="h1" variant="subtitle1">
+                {`${total} billable hours`}
+            </Typography>
+              </Grid>
+              <Grid item xs={4} className={classes.center}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Grid container justify="space-around">
+        <KeyboardDatePicker
+          disableToolbar
+          variant="inline"
+          format="MM/dd/yyyy"
+          margin="normal"
+          id="date-picker-inline"
+          label="Date"
+          value={date}
+          onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+      </Grid>
+    </MuiPickersUtilsProvider>
+              </Grid>
+              <Grid item xs={4} className={classes.right}>
+
+              </Grid>
             {entries.map(project => (
                 <Grid item key={project.key} xs={12}  md={4}>
                 <Card>
