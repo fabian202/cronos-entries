@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -8,7 +8,7 @@ import { A } from 'hookrouter';
 
 const Login = ({useStyles}) => {
     const classes = useStyles();
-    const { email, password, onEmailChange, onPasswordChange, onAuthenticate, isLogged, message } = useAuthentication()
+    const { email, password, onEmailChange, onPasswordChange, onAuthenticate, message } = useAuthentication()
 
     return (
           <div className={classes.paper}>

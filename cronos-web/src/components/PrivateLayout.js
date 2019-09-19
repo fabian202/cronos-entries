@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { A, navigate } from 'hookrouter';
+import {checkCookie} from '../cookies'
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -60,6 +60,20 @@ const useStyles = makeStyles(theme => ({
 export default function PrivateLayout({ component }) {
     const Component = component;
     const classes = useStyles();
+
+    useEffect(() => {
+      console.log(checkCookie(), new Date().getTime())
+      const token = checkCookie()
+      const now = new Date().getTime()
+
+      if(!token || now > token.exp * 1000) {
+        setTimeout(() => {
+          navigate('/')
+        }, 200);
+      } 
+      
+    }, [])
+
     return (
         <React.Fragment>
       <CssBaseline />
@@ -69,11 +83,9 @@ export default function PrivateLayout({ component }) {
             Cronos
           </Typography>
           <nav>
-            <A href="/project" className={classes.link}>
-              Projects
-            </A>
+
           </nav>
-          <Button href="#" color="primary" variant="outlined" className={classes.link}>
+          <Button href="/" color="primary" variant="outlined" className={classes.link}>
             Logout
           </Button>
         </Toolbar>

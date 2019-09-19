@@ -19,7 +19,9 @@ export const useAddEntry = () => {
                 try {
                     const res = await api.post('entry', newValue)
                     console.log(res)
-                    navigate('/home')
+                    setTimeout(() => {
+                        navigate('/home', true)
+                    }, 200);
                 } catch (error) {
                     console.log(error)
                 }
