@@ -5,7 +5,16 @@ export const get = async (req, res, next) => {
  try {
        //Get the user _id from the token
     const { _id } = getTokenFromHeaders(req);
-    const entries = await Entry.find({}).populate('project');
+    const date = new Date(req.query.date)
+    let tomorrow = new Date(date);
+    tomorrow.setDate(date.getDate()+1);
+    const entries = await Entry.find({ 
+        user: _id,
+        createdAt: {
+            $gte: date,
+            $lte: tomorrow
+        }
+    }).populate('project');
     // const entries = await Entry.find({}).populate('user').populate('project');
     res.send(entries);
  } catch (error) {
